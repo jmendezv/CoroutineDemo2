@@ -3,6 +3,7 @@ package cat.copernic.jmendezv.coroutinedemo2
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -46,11 +47,13 @@ class MainViewModel : ViewModel() {
     var job: Job? = null
 
     fun login(user: String, password: String) {
+        // main thread
         Log.d(TAG, "login ${Thread.currentThread().name}")
 //         job = viewModelScope.launch(Dispatchers.IO) {
         // launch doesn't take a Dispatchers.IO parameter. When you don't pass a Dispatcher to
         // launch, any coroutines launched from viewModelScope run in the main thread.
         job = viewModelScope.launch {
+            Log.d(TAG, "launch ${Thread.currentThread().name}")
             val resultado: Resultado = try {
                 // doLogin() is a suspend function
                 doLogin(user, password)

@@ -38,8 +38,7 @@ class MainFragment : Fragment() {
 //            Toast.makeText(requireContext(), "onClick Fragment", Toast.LENGTH_SHORT).show()
             // Síncrona
 //            Log.d(TAG, Thread.currentThread().name)
-            viewModel.
-            login("pepe", "mysecretpassword")
+            viewModel.login("pepe", "mysecretpassword")
             ////
         }
         binding.buttonStop.setOnClickListener {

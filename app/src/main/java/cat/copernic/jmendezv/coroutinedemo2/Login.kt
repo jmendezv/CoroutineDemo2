@@ -23,7 +23,8 @@ sealed class Resultado {
 * They can execute a long running operation and wait for it to complete without blocking.
 * */
 suspend fun doLogin(user: String, password: String): Resultado {
-    return withContext(Dispatchers.IO) {
+    // thread DefaultDispatcher-worker-1
+    return withContext(Dispatchers.Main) {
         Log.d(TAG, "doLogin ${Thread.currentThread().name}")
         delay(10_000)
         if (Random.nextBoolean()) {
@@ -34,6 +35,22 @@ suspend fun doLogin(user: String, password: String): Resultado {
                 .Error(IllegalAccessException("El login no fue correcto"))
         }
     }
+
+}
+
+fun doLoginBlock(user: String, password: String): Resultado {
+    // thread DefaultDispatcher-worker-1
+
+        Log.d(TAG, "doLogin ${Thread.currentThread().name}")
+        Thread.sleep(10_000)
+        return if (Random.nextBoolean()) {
+            Resultado
+                .Exitoso("Logeado")
+        } else {
+            Resultado
+                .Error(IllegalAccessException("El login no fue correcto"))
+        }
+
 
 }
 
